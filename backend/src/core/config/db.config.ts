@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DATABASE_NAME } from './env';
 
-import { Usuario } from 'src/modules/usuarios/usuarios.entity';
+import { Usuario } from 'src/core/entitites/usuarios.entity';
 
 class ConfigService {
   constructor(private DATABASE_NAME: string | undefined) {}
