@@ -8,7 +8,7 @@ import { errorResponse, successResponse } from 'src/core/util';
 export class AuthController {
   constructor(private auth: AuthService) {}
 
-  @Post()
+  @Post('seed')
   async seedData() {
     try {
       const data = await this.auth.seedData();
@@ -19,10 +19,14 @@ export class AuthController {
   }
 
   @Post('login')
-  async identifyUsuario(@Body() data: IdentifyUsuarioDto) {
+  async autenticar(@Body() data: IdentifyUsuarioDto) {
     try {
-      const usuario = await this.auth.autenticarUsuario(data);
-      return successResponse(usuario);
+      const resultado = await this.auth.autenticar(data);
+      if (resultado.exito) {
+        return successResponse(resultado.datos);
+      } else {
+        return errorResponse(resultado.error);
+      }
     } catch (error) {
       return errorResponse(error);
     }

@@ -1,19 +1,16 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Usuario {
+export class Orden {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('varchar')
-  nombre: string;
+  estado: 'creado' | 'procesado' | 'enviado' | 'entregado';
+
+  @Column('int')
+  nroProductos: number;
 
   @Column('varchar')
-  email: string;
-
-  @Column('varchar')
-  password?: string;
-
-  @Column('varchar')
-  rol: 'admin' | 'normal';
+  idUsuario: string;
 }

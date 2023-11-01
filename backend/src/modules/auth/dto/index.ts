@@ -8,4 +8,8 @@ export class IdentifyUsuarioDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  ip: string;
 }
