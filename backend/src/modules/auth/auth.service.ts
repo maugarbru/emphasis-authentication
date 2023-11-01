@@ -19,6 +19,10 @@ export class AuthService {
     private readonly ordenRepo: Repository<Orden>,
   ) {}
 
+  /**
+   * Servicio para llenar la base de datos con datos de prueba
+   * @returns usuarios y ordenes creadas
+   */
   async seedData() {
     await Promise.all([this.userRepo.clear(), this.ordenRepo.clear()]);
     const usersCreated = await Promise.all([
@@ -35,6 +39,11 @@ export class AuthService {
     return { usuarios: usersCreated, ordenes: ordersCreated };
   }
 
+  /**
+   * Servicio para realizar el flujo de autenticación del usuario
+   * @param data Credenciales del usuario
+   * @returns Info del usuario y ordenes
+   */
   async autenticar(data: IdentifyUsuarioDto): Promise<Solicitud> {
     return await manejadorAutenticacion(data);
   }

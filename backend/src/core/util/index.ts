@@ -1,7 +1,7 @@
 import { ApiResponse } from './types';
 
 export const errorResponse = (error: ApiResponse['error']): ApiResponse => {
-  console.log(error);
+  console.log('\x1b[31m', error, '\x1b[0m');
   return {
     success: false,
     data: null,

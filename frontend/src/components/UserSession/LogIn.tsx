@@ -26,7 +26,7 @@ const LogIn = () => {
   } = useForm<LogInFields>({
     defaultValues: {
       email: 'admin@test.com',
-      password: '1234',
+      password: '',
     },
   });
 
@@ -56,6 +56,7 @@ const LogIn = () => {
   };
 
   useEffect(() => {
+    // Obtiene la IP real del equipo
     fetch('https://api.ipify.org?format=json')
       .then((response) => response.json())
       .then((res) => {
