@@ -7,13 +7,9 @@ type MainLayoutProps = {
 
 const MainLayout = ({ children }: MainLayoutProps): React.JSX.Element => {
   return (
-    <div className="w-full h-screen bg-gradient-to-tr from-cyan-500 to-cyan-100">
-      <div className="flex flex-col w-full justify-center items-start">
-        <div className="flex h-full w-full justify-center items-center py-5 px-20">
-          <div className="backdrop-blur-md bg-white/50 h-4/5 rounded-lg w-full p-5">
-            {children}
-          </div>
-        </div>
+    <div className="w-full h-screen bg-gradient-to-tr from-indigo-500 via-sky-500 to-emerald-500">
+      <div className="flex h-full w-full justify-center items-center px-10 py-5 overflow-auto">
+        <div className="h-full w-full">{children}</div>
       </div>
       <ToastContainer
         position="top-center"

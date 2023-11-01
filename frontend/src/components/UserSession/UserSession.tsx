@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import LogIn from './LogIn';
-import SignUp from './SignUp';
 
 import { RootState } from 'src/core/store';
 import { logout } from 'src/core/store/slices/userData';
 
 const UserSession = (): React.JSX.Element => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.userData);
-  const [isLogIn, setIsLogin] = useState(true);
+  const { data } = useSelector((state: RootState) => state.userData);
 
   const cerrarSesion = () => {
     dispatch(logout({}));
@@ -20,31 +18,50 @@ const UserSession = (): React.JSX.Element => {
 
   return (
     <>
-      {!user ? (
+      {!data ? (
         <div className="flex flex-col w-full h-full justify-between items-center py-10">
-          {isLogIn ? <LogIn /> : <SignUp changeToLogin={setIsLogin} />}
-
-          <div className="flex justify-between items-center">
-            <p>{`${isLogIn ? 'No' : 'Ya'} estás registrado?`}</p>
-            <button
-              className="text-black underline p-2 hover:text-cyan-500"
-              onClick={() => setIsLogin(!isLogIn)}
-            >
-              {isLogIn ? 'Regístrate' : 'Inicia sesión'}
-            </button>
-          </div>
+          <LogIn />
         </div>
       ) : (
-        <div className="flex flex-col w-full h-full justify-between items-center py-10">
-          <div className="space-y-4 flex flex-col justify-center items-center">
-            <h1 className="text-2xl font-bold">{`${user.nombre} ${user.apellido}`}</h1>
-            <h3 className="text-lg">{user.email}</h3>
+        <div className="flex flex-col w-full h-full justify-center items-center">
+          <div className="space-y-4 flex flex-col justify-center items-center backdrop-blur-md bg-white/30 p-5 rounded-lg shadow-2xl">
+            <h1 className="text-2xl font-bold">{`${data.usuario.nombre}`}</h1>
+            <h3 className="text-lg">{data.usuario.email}</h3>
+            <h4 className="text-base font-bold uppercase">
+              [{data.usuario.rol}]
+            </h4>
             <button
               className="flex items-center text-white bg-red-500 rounded-lg p-2 shadow-md hover:bg-red-600"
               onClick={cerrarSesion}
             >
               Cerrar sesión
             </button>
+          </div>
+          <div className="mt-4 flex flex-col justify-center items-center backdrop-blur-md bg-white/30 p-5 rounded-lg shadow-2xl">
+            <div className="w-full grow overflow-y-auto">
+              <table className="table-fixed w-full">
+                <thead className="bg-cyan-100">
+                  <tr>
+                    <th>ID Orden</th>
+                    <th>Estado</th>
+                    <th># Productos</th>
+                    <th>ID Usuario</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data?.ordenes?.map((item) => (
+                    <tr key={item.id} className="bg-cyan-100/50">
+                      <td className="text-xs text-left pl-5">{item.id}</td>
+                      <td className="text-center uppercase">{item.estado}</td>
+                      <td className="text-center">{item.nroProductos}</td>
+                      <td className="text-xs text-left pr-5">
+                        {item.idUsuario}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}

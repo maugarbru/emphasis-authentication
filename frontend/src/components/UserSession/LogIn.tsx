@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -23,30 +23,46 @@ const LogIn = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LogInFields>();
+  } = useForm<LogInFields>({
+    defaultValues: {
+      email: 'admin@test.com',
+      password: '1234',
+    },
+  });
 
   const dispatch = useDispatch();
+
+  const [ip, setIp] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<LogInFields> = (data) => {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-    fetch(APIbaseURL + 'usuarios/login', {
+    fetch(APIbaseURL + 'auth/login', {
       method: 'POST',
       headers: myHeaders,
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, ip }),
     })
       .then((response) => response.json())
       .then((result) => {
         const { data, success, error } = result;
         if (success) {
-          toast.success(`Bienvenido, [${data.nombre} ${data.apellido}] !`);
+          toast.success(`Bienvenido, [${data.usuario.nombre}] !`);
           dispatch(login(data));
         } else {
-          toast.error(error.message);
+          toast.error(error);
         }
       })
       .catch((error) => toast.error(error.message));
   };
+
+  useEffect(() => {
+    fetch('https://api.ipify.org?format=json')
+      .then((response) => response.json())
+      .then((res) => {
+        setIp(res.ip);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <form
