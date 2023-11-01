@@ -32,4 +32,20 @@ export const mockedOrdenes: OrdenType[] = [
     estado: 'entregado',
     nroProductos: 2,
   },
+  {
+    estado: 'creado',
+    nroProductos: 2,
+  },
+  {
+    estado: 'entregado',
+    nroProductos: 3,
+  },
+  {
+    estado: 'enviado',
+    nroProductos: 4,
+  },
+  {
+    estado: 'entregado',
+    nroProductos: 2,
+  },
 ];

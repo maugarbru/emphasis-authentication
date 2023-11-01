@@ -28,7 +28,7 @@ export class AuthService {
       ...mockedOrdenes.map((u, index) =>
         this.ordenRepo.save({
           ...u,
-          idUsuario: index % 2 === 0 ? usersCreated[0].id : 'test',
+          idUsuario: index < 2 ? usersCreated[0].id : 'test',
         }),
       ),
     ]);
